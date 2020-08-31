@@ -30,20 +30,12 @@ ANSIBLE_METADATA = {
 }
 
 import logging
-import traceback
 import ansible_collections.arista.cvp.plugins.module_utils.logger   # noqa # pylint: disable=unused-import
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.arista.cvp.plugins.module_utils.cv_tools import cv_update_configlets_on_device
-# from ansible_collections.arista.cvp.plugins.module_utils.cv_client import CvpClient
-# from ansible_collections.arista.cvp.plugins.module_utils.cv_client_errors import CvpLoginError
-try:
-    from cvprac.cvp_client import CvpClient
-    from cvprac.cvp_client_errors import CvpLoginError
-    HAS_CVPRAC = True
-except ImportError:
-    HAS_CVPRAC = False
-    CVPRAC_IMP_ERR = traceback.format_exc()
-
+from ansible_collections.arista.cvp.plugins.module_utils.cv_client import CvpClient
+from ansible_collections.arista.cvp.plugins.module_utils.cv_client_errors import (
+    CvpLoginError
+)
 from ansible.module_utils.connection import Connection
 
 DOCUMENTATION = r"""
@@ -565,7 +557,7 @@ def build_new_devices_list(module):
                 module=module, device_name=ansible_device_hostname
             )
             if cvp_device is None:
-                module.fail_json(msg="Device not available on Cloudvision (" + ansible_device_hostname + ")")
+                module.fail_json(msg="Device not available on Cloudvision ("+ansible_device_hostname+")")
             if len(cvp_device) >= 0:
                 if is_in_container(device=cvp_device, container="undefined_container"):
                     device_info = {
@@ -711,13 +703,12 @@ def devices_new(module):
 
         # Execute configlet update on device
         try:
-            MODULE_LOGGER.info('provision device using cvprac.api.deploy_device')
-            device_action = module.client.api.deploy_device(
+            device_action = module.client.api.provision_device(
                 app_name="Ansible",
                 device=device_facts,
-                container=container_facts['name'],
+                container=container_facts,
                 configlets=configlets_add,
-                # imageBundle=imageBundle_attached,
+                imageBundle=imageBundle_attached,
                 create_task=action_save_topology,
             )
         except Exception as error:
@@ -726,7 +717,6 @@ def devices_new(module):
                 device_update["name"],
                 errorMessage,
             )
-            MODULE_LOGGER.debug('OK, something wrong happens, raise an exception: %s', str(message))
             result_update.append({device_update["name"]: message})
         else:
             # Capture and report error message sent by CV during update
@@ -912,9 +902,10 @@ def devices_update(module, mode="override"):
         MODULE_LOGGER.debug(" * device_update - device facts: %s", str(device_facts))
 
         MODULE_LOGGER.debug(" * device_update - var status for %s: add: %s / del: %s",
-                            str(device_update["name"]),
-                            str(configlets_add),
-                            str(configlets_delete))
+            str(device_update["name"]),
+            str(configlets_add),
+            str(configlets_delete)
+        )
         # # Structure to list configlets to delete
         configlets_delete = list()
         # # Structure to list configlets to configure on device.
@@ -971,26 +962,14 @@ def devices_update(module, mode="override"):
             module.fail_json("Error - device does not exists on CV side.")
 
         # Execute configlet update on device
-        MODULE_LOGGER.debug(' * device_update - device_update configlets: %s', str(device_update["configlets"]))
-        MODULE_LOGGER.debug(' * device_update - cv_configlets configlets: %s', str(device_update["cv_configlets"]))
         if is_list_diff(device_update["configlets"], device_update["cv_configlets"]):
-            MODULE_LOGGER.debug(' * device_update - call cv_update_configlets_on_device')
             try:
-                MODULE_LOGGER.debug(' * device_update - cv_configlets configlets: %s')
-                # device_action = module.client.api.update_configlets_on_device(
-                #     app_name="Ansible",
-                #     device=device_facts,
-                #     add_configlets=configlets_add,
-                #     del_configlets=configlets_delete,
-                # )
-                MODULE_LOGGER.debug("", str(configlets_add))
-                device_action = cv_update_configlets_on_device(
-                    module=module,
-                    device_facts=device_facts,
+                device_action = module.client.api.update_configlets_on_device(
+                    app_name="Ansible",
+                    device=device_facts,
                     add_configlets=configlets_add,
-                    del_configlets=configlets_delete
+                    del_configlets=configlets_delete,
                 )
-                MODULE_LOGGER.debug(' * device_update - get response from cv_update_configlets_on_device: %s', str(device_action))
             except Exception as error:
                 errorMessage = str(error)
                 message = "Device %s Configlets cannot be updated - %s" % (
@@ -1008,7 +987,6 @@ def devices_update(module, mode="override"):
                     result_update.append({device_update["name"]: message})
                 else:
                     changed = True  # noqa # pylint: disable=unused-variable
-                    MODULE_LOGGER.debug(' * device_update - looking for taskIds in %s', str(device_action))
                     if "taskIds" in str(device_action):
                         devices_updated += 1
                         for taskId in device_action["data"]["taskIds"]:
@@ -1231,10 +1209,6 @@ def main():
                             choices=['merge', 'override', 'delete']))
 
     module = AnsibleModule(argument_spec=argument_spec, supports_check_mode=True)
-
-    if not HAS_CVPRAC:
-        module.fail_json(msg='cvprac required for this module')
-
     # Connect to CVP instance
     module.client = connect(module)
 
