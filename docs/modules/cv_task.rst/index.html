@@ -609,7 +609,7 @@
 
 
   <li class="md-nav__item">
-    <a href="https://github.com/aristanetworks/ansible-avd" title="Arista Validated Design Collection" class="md-nav__link">
+    <a href="https://www.avd.sh" title="Arista Validated Design Collection" class="md-nav__link">
       Arista Validated Design Collection
     </a>
   </li>
@@ -621,7 +621,7 @@
 
 
   <li class="md-nav__item">
-    <a href="https://github.com/aristanetworks/netdevops-examples" title="Arista Automation Examples" class="md-nav__link">
+    <a href="https://aristanetworks.github.io/netdevops-examples/" title="Arista Automation Examples" class="md-nav__link">
       Arista Automation Examples
     </a>
   </li>
@@ -780,26 +780,26 @@
 
 <p></br></p>
 <h2 id="examples">Examples:<a class="headerlink" href="#examples" title="Permanent link">#</a></h2>
-<div class="codehilite"><pre><span></span><code><span class="x">---</span>
-<span class="x">- name: Execute all tasks registered in cvp_configlets variable</span>
-<span class="x">  arista.cvp.cv_task:</span>
-<span class="x">    tasks: &quot;</span><span class="cp">{{</span> <span class="nv">cvp_configlets.data.tasks</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="o">---</span>
+<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Execute</span> <span class="n">all</span> <span class="n">tasks</span> <span class="n">registered</span> <span class="ow">in</span> <span class="n">cvp_configlets</span> <span class="n">variable</span>
+  <span class="n">arista</span><span class="o">.</span><span class="n">cvp</span><span class="o">.</span><span class="n">cv_task</span><span class="p">:</span>
+    <span class="n">tasks</span><span class="p">:</span> <span class="s2">&quot;{{ cvp_configlets.data.tasks }}&quot;</span>
 
-<span class="x">- name: Cancel a list of pending tasks</span>
-<span class="x">  arista.cvp.cv_task:</span>
-<span class="x">    tasks: &quot;</span><span class="cp">{{</span> <span class="nv">cvp_configlets.data.tasks</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">    state: cancelled</span>
+<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Cancel</span> <span class="n">a</span> <span class="n">list</span> <span class="n">of</span> <span class="n">pending</span> <span class="n">tasks</span>
+  <span class="n">arista</span><span class="o">.</span><span class="n">cvp</span><span class="o">.</span><span class="n">cv_task</span><span class="p">:</span>
+    <span class="n">tasks</span><span class="p">:</span> <span class="s2">&quot;{{ cvp_configlets.data.tasks }}&quot;</span>
+    <span class="n">state</span><span class="p">:</span> <span class="n">cancelled</span>
 
-<span class="x"># Execute all pending tasks and wait for completion for 60 seconds</span>
-<span class="x"># In order to get a list of all pending tasks, execute cv_facts first</span>
-<span class="x">- name: Update cvp facts</span>
-<span class="x">  arista.cvp.cv_facts:</span>
+<span class="c1"># Execute all pending tasks and wait for completion for 60 seconds</span>
+<span class="c1"># In order to get a list of all pending tasks, execute cv_facts first</span>
+<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Update</span> <span class="n">cvp</span> <span class="n">facts</span>
+  <span class="n">arista</span><span class="o">.</span><span class="n">cvp</span><span class="o">.</span><span class="n">cv_facts</span><span class="p">:</span>
 
-<span class="x">- name: Execute all pending tasks and wait for completion for 60 seconds</span>
-<span class="x">  arista.cvp.cv_task:</span>
-<span class="x">    port: &#39;</span><span class="cp">{{</span><span class="nv">cvp_port</span><span class="cp">}}</span><span class="x">&#39;</span>
-<span class="x">    tasks: &quot;</span><span class="cp">{{</span> <span class="nv">tasks</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">    wait: 60</span>
+<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Execute</span> <span class="n">all</span> <span class="n">pending</span> <span class="n">tasks</span> <span class="ow">and</span> <span class="n">wait</span> <span class="k">for</span> <span class="n">completion</span> <span class="k">for</span> <span class="mi">60</span> <span class="n">seconds</span>
+  <span class="n">arista</span><span class="o">.</span><span class="n">cvp</span><span class="o">.</span><span class="n">cv_task</span><span class="p">:</span>
+    <span class="n">port</span><span class="p">:</span> <span class="s1">&#39;{{cvp_port}}&#39;</span>
+    <span class="n">tasks</span><span class="p">:</span> <span class="s2">&quot;{{ tasks }}&quot;</span>
+    <span class="n">wait</span><span class="p">:</span> <span class="mi">60</span>
 </code></pre></div>
 
 

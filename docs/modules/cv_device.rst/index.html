@@ -609,7 +609,7 @@
 
 
   <li class="md-nav__item">
-    <a href="https://github.com/aristanetworks/ansible-avd" title="Arista Validated Design Collection" class="md-nav__link">
+    <a href="https://www.avd.sh" title="Arista Validated Design Collection" class="md-nav__link">
       Arista Validated Design Collection
     </a>
   </li>
@@ -621,7 +621,7 @@
 
 
   <li class="md-nav__item">
-    <a href="https://github.com/aristanetworks/netdevops-examples" title="Arista Automation Examples" class="md-nav__link">
+    <a href="https://aristanetworks.github.io/netdevops-examples/" title="Arista Automation Examples" class="md-nav__link">
       Arista Automation Examples
     </a>
   </li>
@@ -807,52 +807,52 @@ devices if the two are different.</p>
 
 <p></br></p>
 <h2 id="examples">Examples:<a class="headerlink" href="#examples" title="Permanent link">#</a></h2>
-<div class="codehilite"><pre><span></span><code><span class="x">---</span>
-<span class="x">- name: Test cv_device</span>
-<span class="x">  hosts: cvp</span>
-<span class="x">  connection: local</span>
-<span class="x">  gather_facts: no</span>
-<span class="x">  collections:</span>
-<span class="x">    - arista.cvp</span>
-<span class="x">  vars:</span>
-<span class="x">    configlet_list:</span>
-<span class="x">      cv_device_test01: &quot;alias a</span><span class="cp">{{</span> <span class="m">999</span> <span class="o">|</span> <span class="nf">random</span> <span class="cp">}}</span><span class="x"> show version&quot;</span>
-<span class="x">      cv_device_test02: &quot;alias a</span><span class="cp">{{</span> <span class="m">999</span> <span class="o">|</span> <span class="nf">random</span> <span class="cp">}}</span><span class="x"> show version&quot;</span>
-<span class="x">    # Device inventory for provision activity: bind configlet</span>
-<span class="x">    devices_inventory:</span>
-<span class="x">      veos01:</span>
-<span class="x">        name: veos01</span>
-<span class="x">        configlets:</span>
-<span class="x">          - cv_device_test01</span>
-<span class="x">          - SYS_TelemetryBuilderV2_172.23.0.2_1</span>
-<span class="x">          - veos01-basic-configuration</span>
-<span class="x">          - SYS_TelemetryBuilderV2</span>
-<span class="x">  tasks:</span>
-<span class="x">      # Collect CVP Facts as init process</span>
-<span class="x">    - name: &quot;Gather CVP facts from </span><span class="cp">{{</span><span class="nv">inventory_hostname</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">      cv_facts:</span>
-<span class="x">      register: cvp_facts</span>
-<span class="x">      tags:</span>
-<span class="x">        - always</span>
+<div class="codehilite"><pre><span></span><code><span class="o">---</span>
+<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Test</span> <span class="n">cv_device</span>
+  <span class="n">hosts</span><span class="p">:</span> <span class="n">cvp</span>
+  <span class="n">connection</span><span class="p">:</span> <span class="n">local</span>
+  <span class="n">gather_facts</span><span class="p">:</span> <span class="n">no</span>
+  <span class="n">collections</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">arista</span><span class="o">.</span><span class="n">cvp</span>
+  <span class="n">vars</span><span class="p">:</span>
+    <span class="n">configlet_list</span><span class="p">:</span>
+      <span class="n">cv_device_test01</span><span class="p">:</span> <span class="s2">&quot;alias a{{ 999 | random }} show version&quot;</span>
+      <span class="n">cv_device_test02</span><span class="p">:</span> <span class="s2">&quot;alias a{{ 999 | random }} show version&quot;</span>
+    <span class="c1"># Device inventory for provision activity: bind configlet</span>
+    <span class="n">devices_inventory</span><span class="p">:</span>
+      <span class="n">veos01</span><span class="p">:</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">veos01</span>
+        <span class="n">configlets</span><span class="p">:</span>
+          <span class="o">-</span> <span class="n">cv_device_test01</span>
+          <span class="o">-</span> <span class="n">SYS_TelemetryBuilderV2_172</span><span class="o">.</span><span class="mf">23.0</span><span class="o">.</span><span class="mi">2</span><span class="n">_1</span>
+          <span class="o">-</span> <span class="n">veos01</span><span class="o">-</span><span class="n">basic</span><span class="o">-</span><span class="n">configuration</span>
+          <span class="o">-</span> <span class="n">SYS_TelemetryBuilderV2</span>
+  <span class="n">tasks</span><span class="p">:</span>
+      <span class="c1"># Collect CVP Facts as init process</span>
+    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;Gather CVP facts from {{inventory_hostname}}&quot;</span>
+      <span class="n">cv_facts</span><span class="p">:</span>
+      <span class="n">register</span><span class="p">:</span> <span class="n">cvp_facts</span>
+      <span class="n">tags</span><span class="p">:</span>
+        <span class="o">-</span> <span class="n">always</span>
 
-<span class="x">    - name: &quot;Configure devices on </span><span class="cp">{{</span><span class="nv">inventory_hostname</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">      tags:</span>
-<span class="x">        - provision</span>
-<span class="x">      cv_device:</span>
-<span class="x">        devices: &quot;</span><span class="cp">{{</span><span class="nv">devices_inventory</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        cvp_facts: &#39;</span><span class="cp">{{</span><span class="nv">cvp_facts.ansible_facts</span><span class="cp">}}</span><span class="x">&#39;</span>
-<span class="x">        device_filter: [&#39;veos&#39;]</span>
-<span class="x">      register: cvp_device</span>
+    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;Configure devices on {{inventory_hostname}}&quot;</span>
+      <span class="n">tags</span><span class="p">:</span>
+        <span class="o">-</span> <span class="n">provision</span>
+      <span class="n">cv_device</span><span class="p">:</span>
+        <span class="n">devices</span><span class="p">:</span> <span class="s2">&quot;{{devices_inventory}}&quot;</span>
+        <span class="n">cvp_facts</span><span class="p">:</span> <span class="s1">&#39;{{cvp_facts.ansible_facts}}&#39;</span>
+        <span class="n">device_filter</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;veos&#39;</span><span class="p">]</span>
+      <span class="n">register</span><span class="p">:</span> <span class="n">cvp_device</span>
 
-<span class="x">    - name: &quot;Add configlet to device on </span><span class="cp">{{</span><span class="nv">inventory_hostname</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">      tags:</span>
-<span class="x">        - provision</span>
-<span class="x">      cv_device:</span>
-<span class="x">        devices: &quot;</span><span class="cp">{{</span><span class="nv">devices_inventory</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        cvp_facts: &#39;</span><span class="cp">{{</span><span class="nv">cvp_facts.ansible_facts</span><span class="cp">}}</span><span class="x">&#39;</span>
-<span class="x">        configlet_mode: merge</span>
-<span class="x">        device_filter: [&#39;veos&#39;]</span>
-<span class="x">      register: cvp_device</span>
+    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;Add configlet to device on {{inventory_hostname}}&quot;</span>
+      <span class="n">tags</span><span class="p">:</span>
+        <span class="o">-</span> <span class="n">provision</span>
+      <span class="n">cv_device</span><span class="p">:</span>
+        <span class="n">devices</span><span class="p">:</span> <span class="s2">&quot;{{devices_inventory}}&quot;</span>
+        <span class="n">cvp_facts</span><span class="p">:</span> <span class="s1">&#39;{{cvp_facts.ansible_facts}}&#39;</span>
+        <span class="n">configlet_mode</span><span class="p">:</span> <span class="n">merge</span>
+        <span class="n">device_filter</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;veos&#39;</span><span class="p">]</span>
+      <span class="n">register</span><span class="p">:</span> <span class="n">cvp_device</span>
 </code></pre></div>
 
 
