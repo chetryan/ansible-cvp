@@ -1019,10 +1019,16 @@ $ make shell
 
 <h4 id="commands-for-docker-compose">Commands for docker-compose<a class="headerlink" href="#commands-for-docker-compose" title="Permanent link">#</a></h4>
 <ul>
-<li><code>dev-start</code>: Start docker compose stack to develop with AVD and CVP collection (alias: <code>start</code>)
-    - Deploy an <a href="https://hub.docker.com/repository/docker/titom73/mkdocs">mkdoc</a> instance to expose AVD documentation with live reload for development purposes.
-    - Deploy an <a href="https://hub.docker.com/repository/docker/titom73/mkdocs">mkdoc</a> instance to expose CVP documentation with live reload for development purposes.
-    - Deploy an <a href="https://hub.docker.com/repository/docker/avdteam/base">AVD runner</a> with a pseudo terminal connected to shell for ansible execution</li>
+<li>
+<p><code>dev-start</code>: Start docker compose stack to develop with AVD and CVP collection (alias: <code>start</code>)</p>
+<ul>
+<li>Deploy an <a href="https://hub.docker.com/repository/docker/titom73/mkdocs">mkdoc</a> instance to expose AVD documentation with live reload for development purposes.</li>
+<li>Deploy an <a href="https://hub.docker.com/repository/docker/titom73/mkdocs">mkdoc</a> instance to expose CVP documentation with live reload for development purposes.</li>
+<li>Deploy an <a href="https://hub.docker.com/repository/docker/avdteam/base">AVD runner</a> with a pseudo terminal connected to shell for ansible execution</li>
+</ul>
+</li>
+</ul>
+<ul>
 <li><code>dev-stop</code>: Stop docker compose stack and remove containers (alias: <code>stop</code>)</li>
 <li><code>dev-run</code>: Run a shell attached to ansible container (alias: <code>shell</code>)</li>
 <li><code>dev-reload</code>: Stop and Start docker-compose stack</li>
