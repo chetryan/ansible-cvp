@@ -823,9 +823,11 @@
                 <h1 id="release-notes-for-ansible-cvp-2x">Release Notes For Ansible CVP 2.x<a class="headerlink" href="#release-notes-for-ansible-cvp-2x" title="Permanent link">#</a></h1>
 <p><strong>Table of Contents:</strong></p>
 <ul>
-<li><a href="#release-notes-for-ansible-cvp-2x">Release Notes For Ansible CVP 2.x</a></li>
+<li><a href="#release-notes-for-ansible-cvp-2x">Release Notes For Ansible CVP 2.x</a><ul>
 <li><a href="#release-210">Release 2.1.0</a></li>
 <li><a href="#release-200">Release 2.0.0</a></li>
+</ul>
+</li>
 </ul>
 <h2 id="release-210">Release 2.1.0<a class="headerlink" href="#release-210" title="Permanent link">#</a></h2>
 <p><strong>Supported CloudVision version:</strong></p>
@@ -863,16 +865,12 @@
 </blockquote>
 <p><strong>Enhancements</strong></p>
 <ul>
-<li>
-<p>Move collection backend to <a href="https://github.com/aristanetworks/cvprac">cvprac module</a> to manage all Cloudvision communications.</p>
-<ul>
-<li>Please update python requirements by installing <code>cvprac</code> in version <code>1.0.4</code></li>
-<li>AVD container has been updated accordingly. Please pull out the new version on your laptop.</li>
+<li>Move collection backend to <a href="https://github.com/aristanetworks/cvprac">cvprac module</a> to manage all Cloudvision communications.<p>- Please update python requirements by installing <code>cvprac</code> in version <code>1.0.4</code>
+  - AVD container has been updated accordingly. Please pull out the new version on your laptop.</p>
+</li>
 </ul>
-</li>
-<li>
-<p>Install cvprac</p>
-</li>
+<ul>
+<li>Install cvprac</li>
 </ul>
 <div class="highlight"><pre><span></span><code>pip install <span class="nv">cvprac</span><span class="o">==</span><span class="m">1</span>.0.4
 </code></pre></div>

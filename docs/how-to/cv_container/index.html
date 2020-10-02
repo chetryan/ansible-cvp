@@ -919,15 +919,11 @@
 <ul>
 <li>Container Name</li>
 <li>Parent container where to create container</li>
-<li>Optional list of devices to attach to container<ul>
-<li>Devices must be already registered</li>
-<li>Should not be in undefined container</li>
-</ul>
-</li>
-<li>Optional list of configlets to attach to container:<ul>
-<li>Configlets must be created previously</li>
-</ul>
-</li>
+<li>Optional list of devices to attach to container
+    - Devices must be already registered
+    - Should not be in undefined container</li>
+<li>Optional list of configlets to attach to container:
+    - Configlets must be created previously</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="nn">---</span>
 <span class="nt">CVP_CONTAINERS</span><span class="p">:</span>
@@ -954,12 +950,10 @@
 </ul>
 <h4 id="optional-inputs">Optional inputs<a class="headerlink" href="#optional-inputs" title="Permanent link">#</a></h4>
 <ul>
-<li><code>mode</code>: Define how to manage container available on CV and not in customer topology<ul>
-<li><code>merge</code> (default)</li>
-<li><code>delete</code></li>
-<li><code>override</code></li>
-</ul>
-</li>
+<li><code>mode</code>: Define how to manage container available on CV and not in customer topology
+    - <code>merge</code> (default)
+    - <code>delete</code>
+    - <code>override</code></li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lab04 - cv_container lab</span>
   <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CloudVision</span>
