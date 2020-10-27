@@ -1,0 +1,868 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Arista Cloudvision collection's documentation">
+      
+      
+      
+        <meta name="author" content="Arista Ansible Team">
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+    
+    
+      
+        <title>Debug logs - Arista CVP collection</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.a676eddb.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.material.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#debug-logs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../../.." title="Arista CVP collection" class="md-header-nav__button md-logo" aria-label="Arista CVP collection">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Arista CVP collection
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Debug logs
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/aristanetworks/ansible-cvp/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    CVP on Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Arista CVP collection" class="md-nav__button md-logo" aria-label="Arista CVP collection">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    Arista CVP collection
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/aristanetworks/ansible-cvp/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    CVP on Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../getting-started/" title="Getting Started" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Release Notes
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Release Notes" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Release Notes
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../release-notes/v1.x/" title="Versions 1.x" class="md-nav__link">
+      Versions 1.x
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../release-notes/v2.x/" title="Versions 2.x" class="md-nav__link">
+      Versions 2.x
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Installation
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Installation" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Installation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../installation/requirements/" title="Requirements" class="md-nav__link">
+      Requirements
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../installation/setup-environement/" title="Configure your local environment" class="md-nav__link">
+      Configure your local environment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../installation/setup-git/" title="Installation using git" class="md-nav__link">
+      Installation using git
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../installation/setup-galaxy/" title="Installation using ansible-galaxy" class="md-nav__link">
+      Installation using ansible-galaxy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../installation/setup-docker/" title="Docker & Development" class="md-nav__link">
+      Docker & Development
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      How-To
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="How-To" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        How-To
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cvp-authentication/" title="Configure Cloudvision Authentication" class="md-nav__link">
+      Configure Cloudvision Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cv_facts/" title="Get Facts" class="md-nav__link">
+      Get Facts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cv_configlet/" title="Manage configlets" class="md-nav__link">
+      Manage configlets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cv_container/" title="Manage containers" class="md-nav__link">
+      Manage containers
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cv_device/" title="Manage devices" class="md-nav__link">
+      Manage devices
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../installation/development/" title="Development tips & tricks" class="md-nav__link">
+      Development tips & tricks
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Roles documentation
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Roles documentation" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Roles documentation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../roles/dhcp_configuration/" title="DHCP Configuration role" class="md-nav__link">
+      DHCP Configuration role
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../roles/configlets_sync/" title="Cloudvision Configlet Sync" class="md-nav__link">
+      Cloudvision Configlet Sync
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Modules documentation
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Modules documentation" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Modules documentation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../modules/cv_facts.rst/" title="Module cv_facts" class="md-nav__link">
+      Module cv_facts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../modules/cv_configlet.rst/" title="Module cv_configlet" class="md-nav__link">
+      Module cv_configlet
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../modules/cv_container.rst/" title="Module cv_container" class="md-nav__link">
+      Module cv_container
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../modules/cv_device.rst/" title="Module cv_device" class="md-nav__link">
+      Module cv_device
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../modules/cv_task.rst/" title="Module cv_tasks" class="md-nav__link">
+      Module cv_tasks
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      External resources
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="External resources" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        External resources
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://docs.ansible.com/ansible/latest/user_guide/collections_using.html" title="Ansible collection user guide" class="md-nav__link">
+      Ansible collection user guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://docs.ansible.com/ansible/latest/user_guide/index.html" title="Ansible User guide" class="md-nav__link">
+      Ansible User guide
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      About
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="About" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        About
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://galaxy.ansible.com/arista/cvp" title="Ansible Galaxy page" class="md-nav__link">
+      Ansible Galaxy page
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://www.avd.sh" title="Arista Validated Design Collection" class="md-nav__link">
+      Arista Validated Design Collection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://aristanetworks.github.io/netdevops-examples/" title="Arista Automation Examples" class="md-nav__link">
+      Arista Automation Examples
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#activate-debug" class="md-nav__link">
+    Activate debug
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-debug-logs" class="md-nav__link">
+    Get debug logs
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/aristanetworks/ansible-cvp/edit/master/docs/docs/how-to/debug.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <h1 id="debug-logs">Debug logs<a class="headerlink" href="#debug-logs" title="Permanent link">#</a></h1>
+<p>If required, <code>arista.cvp</code> collection supports debug log to get more information about process execution and save all these information in a log file.</p>
+<blockquote>
+<p>Only for advanced users and support requests.</p>
+</blockquote>
+<h2 id="activate-debug">Activate debug<a class="headerlink" href="#activate-debug" title="Permanent link">#</a></h2>
+<p>In your shell, create a file named <code>activate-arista-cvp-log.sh</code>:</p>
+<div class="highlight"><pre><span></span><code>$ vim activate-arista-cvp-log.sh
+
+<span class="c1">#!/bin/sh</span>
+
+<span class="k">if</span> <span class="o">[[</span> ! -z ANSIBLE_CVP_LOG_FILE <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">export</span> <span class="nv">ANSIBLE_CVP_LOG_FILE</span><span class="o">=</span>arista.cvp.debug.log
+<span class="k">fi</span>
+<span class="k">if</span> <span class="o">[[</span> ! -z ANSIBLE_CVP_LOG_LEVEL <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">export</span> <span class="nv">ANSIBLE_CVP_LOG_LEVEL</span><span class="o">=</span>debug
+<span class="k">fi</span>
+<span class="k">if</span> <span class="o">[[</span> ! -z ANSIBLE_CVP_LOG_APICALL <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">export</span> <span class="nv">ANSIBLE_CVP_LOG_APICALL</span><span class="o">=</span>warning
+<span class="k">fi</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;Configure module for logging:&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;  - Logging Level: </span><span class="si">${</span><span class="nv">ANSIBLE_CVP_LOG_LEVEL</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;  - Logging File: </span><span class="si">${</span><span class="nv">ANSIBLE_CVP_LOG_FILE</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;  - URL Lib logging: </span><span class="si">${</span><span class="nv">ANSIBLE_CVP_LOG_APICALL</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>Then, when you want to activate log, run this command:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">source</span> activate-arista-cvp-log.sh
+Configure module <span class="k">for</span> logging:
+  - Logging Level: debug
+  - Logging File: arista.cvp.debug.log
+  - URL Lib logging: warning
+</code></pre></div>
+<h2 id="get-debug-logs">Get debug logs<a class="headerlink" href="#get-debug-logs" title="Permanent link">#</a></h2>
+<p>After your run your playbook, a log file should be available in your shell and you can read it with following command:</p>
+<div class="highlight"><pre><span></span><code>$ less arista.cvp.debug.log
+
+<span class="o">[</span>...<span class="o">]</span>
+<span class="m">2020</span>-10-05 <span class="m">18</span>:13:43,065 - arista.cvp.cv_facts: INFO - func: facts_builder <span class="o">(</span>L:429<span class="o">)</span> - ** Collecting configlets facts ...
+<span class="m">2020</span>-10-05 <span class="m">18</span>:13:43,066 - arista.cvp.cv_facts: INFO - func: facts_configlets <span class="o">(</span>L:246<span class="o">)</span> - Collecting facts v2
+<span class="m">2020</span>-10-05 <span class="m">18</span>:13:44,700 - arista.cvp.cv_facts: INFO - func: facts_configlets <span class="o">(</span>L:253<span class="o">)</span> - Devices part of facts, using cached version
+<span class="m">2020</span>-10-05 <span class="m">18</span>:13:44,700 - arista.cvp.cv_facts: INFO - func: facts_configlets <span class="o">(</span>L:260<span class="o">)</span> - Containers part of facts, using cached version
+<span class="m">2020</span>-10-05 <span class="m">18</span>:13:44,700 - arista.cvp.cv_facts: INFO - func: facts_configlets <span class="o">(</span>L:273<span class="o">)</span> - building list of mapping with devices and containers <span class="k">for</span> configlet AVD_DC1-LEAF2B
+<span class="m">2020</span>-10-05 <span class="m">18</span>:13:44,700 - arista.cvp.tools_inventory: DEBUG - func: find_hostname_by_mac <span class="o">(</span>L:49 <span class="o">)</span> - device data: <span class="o">{</span><span class="s1">&#39;modelName&#39;</span>: <span class="s1">&#39;vEOS&#39;</span>, <span class="s1">&#39;internalVersion&#39;</span>: <span class="s1">&#39;4.24.0F&#39;</span>, <span class="s1">&#39;systemMacAddress&#39;</span>: <span class="s1">&#39;0c:1d:c0:7f:d9:6c&#39;</span>, <span class="s1">&#39;bootupTimestamp&#39;</span>: <span class="m">1600691806</span>.3303108, <span class="s1">&#39;version&#39;</span>: <span class="s1">&#39;4.24.0F&#39;</span>, <span class="s1">&#39;architecture&#39;</span>: <span class="s1">&#39;&#39;</span>, <span class="s1">&#39;internalBuild&#39;</span>: <span class="s1">&#39;da8d6269-c25f-4a12-930b-c3c42c12c38a&#39;</span>, <span class="s1">&#39;hardwareRevision&#39;</span>: <span class="s1">&#39;&#39;</span>, <span class="s1">&#39;domainName&#39;</span>: <span class="s1">&#39;eve.emea.lab&#39;</span>, <span class="s1">&#39;hostname&#39;</span>: <span class="s1">&#39;DC1-LEAF2B&#39;</span>, <span class="s1">&#39;fqdn&#39;</span>: <span class="s1">&#39;DC1-LEAF2B.eve.emea.lab&#39;</span>, <span class="s1">&#39;serialNumber&#39;</span>: <span class="s1">&#39;86277F11ED731FAA3943F1838B6799AA&#39;</span>, <span class="s1">&#39;danzEnabled&#39;</span>: False, <span class="s1">&#39;mlagEnabled&#39;</span>: False, <span class="s1">&#39;streamingStatus&#39;</span>: <span class="s1">&#39;active&#39;</span>, <span class="s1">&#39;parentContainerKey&#39;</span>: <span class="s1">&#39;container_99ea374c-7bc7-454a-b529-31fd181edab3&#39;</span>, <span class="s1">&#39;status&#39;</span>: <span class="s1">&#39;Registered&#39;</span>, <span class="s1">&#39;complianceCode&#39;</span>: <span class="s1">&#39;0000&#39;</span>, <span class="s1">&#39;complianceIndication&#39;</span>: <span class="s1">&#39;&#39;</span>, <span class="s1">&#39;ztpMode&#39;</span>: False, <span class="s1">&#39;unAuthorized&#39;</span>: False, <span class="s1">&#39;ipAddress&#39;</span>: <span class="s1">&#39;10.73.1.16&#39;</span>, <span class="s1">&#39;key&#39;</span>: <span class="s1">&#39;0c:1d:c0:7f:d9:6c&#39;</span>, <span class="s1">&#39;deviceInfo&#39;</span>: <span class="s1">&#39;Registered&#39;</span>, <span class="s1">&#39;deviceStatus&#39;</span>: <span class="s1">&#39;Registered&#39;</span>, <span class="s1">&#39;isMLAGEnabled&#39;</span>: False, <span class="s1">&#39;isDANZEnabled&#39;</span>: False, <span class="s1">&#39;parentContainerId&#39;</span>: <span class="err">&#39;</span>con:
+<span class="o">[</span>...<span class="o">]</span>
+</code></pre></div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 - 2020 Arista Networks
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/vendor.c51dfa35.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../..",
+          features: ["instant"],
+          search: Object.assign({
+            worker: "../../../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
