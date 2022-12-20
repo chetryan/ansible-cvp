@@ -1847,13 +1847,14 @@ class CvDeviceTools(object):
                             config=vc_configlet["config"],
                         )
                         MODULE_LOGGER.debug("resp is: {0}".format(resp))
-                    except CvpApiError:
+                    except CvpApiError as e:
                         MODULE_LOGGER.critical(
                             "Error validation failed on device {0}".format(device.fqdn)
                         )
                         self.__ansible.fail_json(
-                            msg="Error validation failed on device {0}".format(
-                                device.fqdn
+                            msg="Error during validation on device {0}, with error {1}".format(
+                                device.fqdn,
+                                e
                             )
                         )
                     else:
@@ -1890,17 +1891,24 @@ class CvDeviceTools(object):
                 ModuleOptionValues.VALIDATE_MODE_STOP_ON_WARNING,
                 ModuleOptionValues.VALIDATE_MODE_STOP_ON_ERROR,
             ]:
-                self.__ansible.fail_json(msg=str(device_data))
-            else:
-                self.__ansible.exit_json(msg=str(device_data))
+                message = f"Encountered {len(device_data['errors'])} errors during \
+                    validation. Refere to 'validation_results' for details."
+                self.__ansible.fail_json(msg=message, validation_results=device_data)
+                # self.__ansible.fail_json(msg=str(device_data), validation_results=device_data)
+            # We don't want to exit here, so that we return results
+            # else:
+            #     self.__ansible.exit_json(msg=str(device_data), validation_results=device_data)
         elif len(device_data["warnings"]) > 0:
             if validate_mode == ModuleOptionValues.VALIDATE_MODE_STOP_ON_WARNING:
-                self.__ansible.fail_json(msg=str(device_data))
-            if validate_mode in [
-                ModuleOptionValues.VALIDATE_MODE_STOP_ON_ERROR,
-                ModuleOptionValues.VALIDATE_MODE_IGNORE,
-            ]:
-                self.__ansible.exit_json(msg=str(device_data))
+                message = f"Encountered {len(device_data['warnings'])} warnings during \
+                    validation. Refere to 'validation_results' for details."
+                self.__ansible.fail_json(msg=message, validation_results=device_data)
+                # self.__ansible.fail_json(msg=str(device_data), validation_results=device_data)
+            # if validate_mode in [
+            #     ModuleOptionValues.VALIDATE_MODE_STOP_ON_ERROR,
+            #     ModuleOptionValues.VALIDATE_MODE_IGNORE,
+            # ]:
+            #     self.__ansible.exit_json(msg=str(device_data), validation_result=device_data)
         else:
             return results
 
